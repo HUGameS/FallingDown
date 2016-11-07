@@ -14,7 +14,6 @@ export default class extends Phaser.State {
     banner.fontSize = 40
     banner.fill = '#77BFA3'
     banner.anchor.setTo(0.5)
-    console.log(this.game);
 
     this.mushroom = new Mushroom({
       game: this.game,
@@ -23,9 +22,16 @@ export default class extends Phaser.State {
       asset: 'mushroom'
     })
 
-    this.platform = new Platform({
+    this.platform1 = new Platform({
       game: this.game,
-      x: this.game.world.centerX,
+      x: this.game.world.centerX + 380,
+      y: this.game.world.centerY + 80,
+      asset: 'loaderBar'
+    })
+
+    this.platform2 = new Platform({
+      game: this.game,
+      x: this.game.world.centerX -380,
       y: this.game.world.centerY + 80,
       asset: 'loaderBar'
     })
@@ -34,32 +40,42 @@ export default class extends Phaser.State {
     setResponsiveWidth(this.mushroom, 30, this.game.world)
     this.game.add.existing(this.mushroom)
     this.mushroom.scale.setTo(1, 1);
-    this.game.add.existing(this.platform)
-    this.platform.scale.setTo(1, 1);
+    this.game.add.existing(this.platform1)
+    this.platform1.scale.setTo(2, 1);
+    this.game.add.existing(this.platform2)
+    this.platform2.scale.setTo(2, 1);
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //  Set the world (global) gravity
     this.game.physics.arcade.gravity.y = 100;
-    game.physics.enable( [ this.mushroom, this.platform ], Phaser.Physics.ARCADE);
-    this.platform.body.allowGravity = false;
-    this.platform.body.immovable = true;
+    game.physics.enable( [ this.mushroom, this.platform1, this.platform2 ], Phaser.Physics.ARCADE);
+    this.platform1.body.allowGravity = false;
+    this.platform1.body.immovable = true;
+    this.platform2.body.allowGravity = false;
+    this.platform2.body.immovable = true;
 
     this.mushroom.body.collideWorldBounds = true;
       
     this.cursors = game.input.keyboard.createCursorKeys();
-    this.platform.body.velocity.y = -50;
+    this.platform1.body.velocity.y = -50;
+    this.platform2.body.velocity.y = -50;
     this.resetPlatform();
   }
 
   resetPlatform() {
-    this.platform.body.position.y = this.game.height;
-    this.platform.body.velocity.y -= 10;
+    const offset = Math.floor(Math.random() * 200) -100;
+    this.platform1.body.position.y = this.game.height;
+    this.platform1.body.velocity.y -= 10;
+    this.platform1.body.position.x += offset;
+    this.platform2.body.position.y = this.game.height;
+    this.platform2.body.velocity.y -= 10;
+    this.platform2.body.position.x += offset;
   }
 
   update () {
-    game.physics.arcade.collide(this.mushroom, this.platform);
-      
+    game.physics.arcade.collide(this.mushroom, this.platform1);
+    game.physics.arcade.collide(this.mushroom, this.platform2);
     if (this.cursors.left.isDown) {
        this.mushroom.body.velocity.x -= 3;
     
@@ -67,7 +83,7 @@ export default class extends Phaser.State {
         this.mushroom.body.velocity.x += 3;
     }
 
-    if(this.platform.y <= 0) {
+    if(this.platform1.y <= 0) {
       this.resetPlatform();
     }
 
@@ -79,7 +95,7 @@ export default class extends Phaser.State {
   render () {
     if (__DEV__) {
       // this.game.debug.spriteInfo(this.mushroom, 32, 32)
-      this.game.debug.spriteInfo(this.platform, 32, 32)
+      this.game.debug.spriteInfo(this.platform1, 32, 32)
     }
   }
 }
