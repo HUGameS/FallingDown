@@ -14,6 +14,7 @@ export default class extends Phaser.State {
     banner.fontSize = 40
     banner.fill = '#77BFA3'
     banner.anchor.setTo(0.5)
+    console.log(this.game);
 
     this.mushroom = new Mushroom({
       game: this.game,
@@ -47,6 +48,13 @@ export default class extends Phaser.State {
     this.mushroom.body.collideWorldBounds = true;
       
     this.cursors = game.input.keyboard.createCursorKeys();
+    this.platform.body.velocity.y = -50;
+    this.resetPlatform();
+  }
+
+  resetPlatform() {
+    this.platform.body.position.y = this.game.height;
+    this.platform.body.velocity.y -= 10;
   }
 
   update () {
@@ -58,12 +66,20 @@ export default class extends Phaser.State {
     } else if (this.cursors.right.isDown) {
         this.mushroom.body.velocity.x += 3;
     }
-        
+
+    if(this.platform.y <= 0) {
+      this.resetPlatform();
+    }
+
+    if(this.mushroom.body.y === 0) {
+      this.state.start('Game over')
+    }
   }
 
   render () {
     if (__DEV__) {
-      this.game.debug.spriteInfo(this.mushroom, 32, 32)
+      // this.game.debug.spriteInfo(this.mushroom, 32, 32)
+      this.game.debug.spriteInfo(this.platform, 32, 32)
     }
   }
 }
