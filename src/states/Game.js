@@ -45,10 +45,20 @@ export default class extends Phaser.State {
     this.platform.body.immovable = true;
 
     this.mushroom.body.collideWorldBounds = true;
+      
+    this.cursors = game.input.keyboard.createCursorKeys();
   }
 
   update () {
     game.physics.arcade.collide(this.mushroom, this.platform);
+      
+    if (this.cursors.left.isDown) {
+       this.mushroom.body.velocity.x -= 3;
+    
+    } else if (this.cursors.right.isDown) {
+        this.mushroom.body.velocity.x += 3;
+    }
+        
   }
 
   render () {
