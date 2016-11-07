@@ -1,6 +1,7 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Mushroom from '../sprites/Mushroom'
+import Platform from '../sprites/Platform'
 import {setResponsiveWidth} from '../utils'
 
 export default class extends Phaser.State {
@@ -21,9 +22,33 @@ export default class extends Phaser.State {
       asset: 'mushroom'
     })
 
+    this.platform = new Platform({
+      game: this.game,
+      x: this.game.world.centerX,
+      y: this.game.world.centerY + 80,
+      asset: 'loaderBar'
+    })
+
     // set the sprite width to 30% of the game width
     setResponsiveWidth(this.mushroom, 30, this.game.world)
     this.game.add.existing(this.mushroom)
+    this.mushroom.scale.setTo(1, 1);
+    this.game.add.existing(this.platform)
+    this.platform.scale.setTo(1, 1);
+
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    //  Set the world (global) gravity
+    this.game.physics.arcade.gravity.y = 100;
+    game.physics.enable( [ this.mushroom, this.platform ], Phaser.Physics.ARCADE);
+    this.platform.body.allowGravity = false;
+    this.platform.body.immovable = true;
+
+    this.mushroom.body.collideWorldBounds = true;
+  }
+
+  update () {
+    game.physics.arcade.collide(this.mushroom, this.platform);
   }
 
   render () {
