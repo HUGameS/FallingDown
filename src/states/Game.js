@@ -45,7 +45,15 @@ export default class extends Phaser.State {
     this.game.add.existing(this.platform2)
     this.platform2.scale.setTo(2, 1);
 
+    this.level = 1;
+    this.levelInc = 0;
+    this.score = 0;
+
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    this.scoreText = this.add.text(this.game.width - 100, 20, this.score, { font: '16px Arial', fill: '#000000', align: 'center' });
+    this.scoreText.anchor.setTo(0.5, 0.5);
+    console.log(this.scoreText);
 
     //  Set the world (global) gravity
     this.game.physics.arcade.gravity.y = 100;
@@ -64,16 +72,24 @@ export default class extends Phaser.State {
   }
 
   resetPlatform() {
+    this.levelInc += 1;
+    if(this.levelInc === 4) {
+      this.levelInc = 0;
+      this.level += 1;
+      this.platform1.body.velocity.y -= 30;
+      this.platform2.body.velocity.y -= 30;
+    }
     const offset = Math.floor(Math.random() * 200) -100;
     this.platform1.body.position.y = this.game.height;
-    this.platform1.body.velocity.y -= 10;
     this.platform1.body.position.x += offset;
     this.platform2.body.position.y = this.game.height;
-    this.platform2.body.velocity.y -= 10;
     this.platform2.body.position.x += offset;
   }
 
   update () {
+    this.score += this.level;
+    this.scoreText.setText(`level: ${this.level} score: ${this.score}`);
+
     game.physics.arcade.collide(this.mushroom, this.platform1);
     game.physics.arcade.collide(this.mushroom, this.platform2);
     if (this.cursors.left.isDown) {
@@ -95,7 +111,7 @@ export default class extends Phaser.State {
   render () {
     if (__DEV__) {
       // this.game.debug.spriteInfo(this.mushroom, 32, 32)
-      this.game.debug.spriteInfo(this.platform1, 32, 32)
+      // this.game.debug.spriteInfo(this.platform1, 32, 32)
     }
   }
 }

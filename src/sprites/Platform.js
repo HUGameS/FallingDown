@@ -6,7 +6,6 @@ export default class extends Phaser.Sprite {
     super(game, x, y, asset)
 
     this.game = game
-    console.log(this)
     this.anchor.setTo(0.5)
   }
 
