@@ -3,5 +3,6 @@ faaalllllllliiiiiiiiinnnnnnnnnggggggggggg DOWN
 
 To play:
 
-npm install
-npm run dev
+`npm install` 
+
+`npm run dev`
