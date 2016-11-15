@@ -9,6 +9,14 @@ export default class extends Phaser.State {
   preload () {}
 
   create () {
+      
+    var gameOverSound;
+    var music;
+      
+    music = this.add.audio('gameMusic');
+    music.play();
+      
+   
     let banner = this.add.text(this.game.world.centerX, this.game.height - 30, 'Phaser + ES6 + Webpack')
     banner.font = 'Nunito'
     banner.fontSize = 40
@@ -89,6 +97,9 @@ export default class extends Phaser.State {
   update () {
     this.score += this.level;
     this.scoreText.setText(`level: ${this.level} score: ${this.score}`);
+      
+    // TODO: add preload bar and play the music when it's loaded
+    // if(this.cache.isSoundDecoded('gameMusic') === true)
 
     game.physics.arcade.collide(this.mushroom, this.platform1);
     game.physics.arcade.collide(this.mushroom, this.platform2);

@@ -21,6 +21,10 @@ export default class extends Phaser.State {
 
     this.load.image('loaderBg', './assets/images/loader-bg.png')
     this.load.image('loaderBar', './assets/images/loader-bar.png')
+    //this.load.audio('gameMusic', ['assets/audio/Pamgaea.mp3', 'assets/audio/Pamgaea.ogg']);
+    this.load.audio('gameMusic', ['assets/audio/Pamgaea.mp3', 'assets/audio/Pamgaea.ogg']);
+    this.load.audio('gameOverSound', ['assets/audio/gameover.mp3', 'assets/audio/gameover.ogg']);
+    //this.load.onComplete.add(this.onLoadComplete, this)
   }
 
   render () {
