@@ -55,11 +55,11 @@ export default class extends Phaser.State {
 
     this.level = 1;
     this.levelInc = 0;
-    this.score = 0;
+    this.game.score = 0;
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    this.scoreText = this.add.text(this.game.width - 100, 20, this.score, { font: '16px Arial', fill: '#000000', align: 'center' });
+    this.scoreText = this.add.text(this.game.width - 100, 20, this.game.score, { font: '16px Arial', fill: '#000000', align: 'center' });
     this.scoreText.anchor.setTo(0.5, 0.5);
     console.log(this.scoreText);
 
@@ -92,12 +92,11 @@ export default class extends Phaser.State {
     this.platform1.body.position.x = offset + 200;
     this.platform2.body.position.y = this.game.height;
     this.platform2.body.position.x = offset - 810 ;
-    console.log('offset', offset, this.platform1.body.position.x, this.platform2.body.position.x);
   }
 
   update () {
-    this.score += this.level;
-    this.scoreText.setText(`level: ${this.level} score: ${this.score}`);
+    this.game.score += this.level;
+    this.scoreText.setText(`level: ${this.level} score: ${this.game.score}`);
       
     // TODO: add preload bar and play the music when it's loaded
     // if(this.cache.isSoundDecoded('gameMusic') === true)

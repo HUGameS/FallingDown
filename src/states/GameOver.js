@@ -17,9 +17,13 @@ export default class extends Phaser.State {
       active: this.fontsLoaded
     })
     
-    var gameOverSound;
+    let gameOverSound,
+      message = `YOU FUCKED UP  
+      SCORE: ${this.game.score}`;
+
+
       
-    let text = this.add.text(this.world.centerX, this.world.centerY, 'YOU FUCKED UP', { font: '16px Arial', fill: '#000000', align: 'center' })
+    let text = this.add.text(this.world.centerX, this.world.centerY, message, { font: '16px Arial', fill: '#000000', align: 'center' })
     text.anchor.setTo(0.5, 0.5)
     
 
@@ -27,6 +31,7 @@ export default class extends Phaser.State {
     this.load.image('loaderBar', './assets/images/loader-bar.png')
     gameOverSound = this.add.audio('gameOverSound');
     gameOverSound.play();
+    console.log(this);
   }
 
   render () {
