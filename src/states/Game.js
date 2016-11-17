@@ -32,14 +32,14 @@ export default class extends Phaser.State {
 
     this.platform1 = new Platform({
       game: this.game,
-      x: this.game.world.centerX + 380,
+      x: this.game.world.centerX + 200,
       y: this.game.world.centerY + 80,
       asset: 'loaderBar'
     })
 
     this.platform2 = new Platform({
       game: this.game,
-      x: this.game.world.centerX -380,
+      x: this.game.world.centerX - 810,
       y: this.game.world.centerY + 80,
       asset: 'loaderBar'
     })
@@ -49,9 +49,9 @@ export default class extends Phaser.State {
     this.game.add.existing(this.mushroom)
     this.mushroom.scale.setTo(1, 1);
     this.game.add.existing(this.platform1)
-    this.platform1.scale.setTo(2, 1);
+    this.platform1.scale.setTo(3, 1);
     this.game.add.existing(this.platform2)
-    this.platform2.scale.setTo(2, 1);
+    this.platform2.scale.setTo(3, 1);
 
     this.level = 1;
     this.levelInc = 0;
@@ -64,7 +64,7 @@ export default class extends Phaser.State {
     console.log(this.scoreText);
 
     //  Set the world (global) gravity
-    this.game.physics.arcade.gravity.y = 100;
+    this.game.physics.arcade.gravity.y = 500;
     game.physics.enable( [ this.mushroom, this.platform1, this.platform2 ], Phaser.Physics.ARCADE);
     this.platform1.body.allowGravity = false;
     this.platform1.body.immovable = true;
@@ -87,11 +87,12 @@ export default class extends Phaser.State {
       this.platform1.body.velocity.y -= 30;
       this.platform2.body.velocity.y -= 30;
     }
-    const offset = Math.floor(Math.random() * 200) -100;
+    const offset = Math.floor(Math.random() * 610);
     this.platform1.body.position.y = this.game.height;
-    this.platform1.body.position.x += offset;
+    this.platform1.body.position.x = offset + 200;
     this.platform2.body.position.y = this.game.height;
-    this.platform2.body.position.x += offset;
+    this.platform2.body.position.x = offset - 810 ;
+    console.log('offset', offset, this.platform1.body.position.x, this.platform2.body.position.x);
   }
 
   update () {
@@ -104,10 +105,10 @@ export default class extends Phaser.State {
     game.physics.arcade.collide(this.mushroom, this.platform1);
     game.physics.arcade.collide(this.mushroom, this.platform2);
     if (this.cursors.left.isDown) {
-       this.mushroom.body.velocity.x -= 3;
+       this.mushroom.body.velocity.x -= 10;
     
     } else if (this.cursors.right.isDown) {
-        this.mushroom.body.velocity.x += 3;
+        this.mushroom.body.velocity.x += 10;
     }
 
     if(this.platform1.y <= 0) {
