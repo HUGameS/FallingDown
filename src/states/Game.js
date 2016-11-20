@@ -13,8 +13,8 @@ export default class extends Phaser.State {
     var gameOverSound;
     var music;
       
-    music = this.add.audio('gameMusic');
-    music.play();
+    this.music = this.add.audio('gameMusic');
+    this.music.play();
       
    
     // let banner = this.add.text(this.game.world.centerX, this.game.height - 30, 'Phaser + ES6 + Webpack')
@@ -62,6 +62,10 @@ export default class extends Phaser.State {
     this.scoreText = this.add.text(this.game.width - 100, 20, this.game.score, { font: '16px Arial', fill: '#000000', align: 'center' });
     this.scoreText.anchor.setTo(0.5, 0.5);
     console.log(this.scoreText);
+      
+    
+   
+  
 
     //  Set the world (global) gravity
     this.game.physics.arcade.gravity.y = 500;
@@ -115,9 +119,12 @@ export default class extends Phaser.State {
     }
 
     if(this.mushroom.body.y === 0) {
-      this.state.start('Game over')
+        this.music.stop();
+        this.state.start('Game over')
     }
   }
+    
+
 
   render () {
     if (__DEV__) {

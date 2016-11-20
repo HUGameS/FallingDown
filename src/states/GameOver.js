@@ -17,12 +17,28 @@ export default class extends Phaser.State {
       active: this.fontsLoaded
     })
     
+
+    // Highscore from localstorage (one entry) 
+    if(localStorage.getItem('FallingDownHighscore') === null){
+
+        localStorage.setItem('FallingDownHighscore',this.game.score);
+
+    }
+
+    else if(this.game.score > localStorage.getItem('FallingDownHighscore')){
+
+        localStorage.setItem('FallingDownHighscore',this.game.score);
+
+    }
+
     let gameOverSound,
-      message = `YOU FUCKED UP  
-      SCORE: ${this.game.score}`;
+    message = `YOU FUCKED UP  
 
+    SCORE: ${this.game.score}
+    HIGHSCORE: ${localStorage.getItem('FallingDownHighscore')}
 
-      
+    Press up arrow to play again`;
+
     let text = this.add.text(this.world.centerX, this.world.centerY, message, { font: '16px Arial', fill: '#000000', align: 'center' })
     text.anchor.setTo(0.5, 0.5)
     
@@ -36,7 +52,7 @@ export default class extends Phaser.State {
 
   render () {
     if (this.cursors.up.isDown) {
-      this.state.start('Game')
+        this.state.start('Game')
     }
   }
 
