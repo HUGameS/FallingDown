@@ -61,15 +61,12 @@ export default class extends Phaser.State {
 
     this.scoreText = this.add.text(this.game.width - 100, 20, this.game.score, { font: '16px Arial', fill: '#000000', align: 'center' });
     this.scoreText.anchor.setTo(0.5, 0.5);
-    console.log(this.scoreText);
       
-    
-   
-  
-
     //  Set the world (global) gravity
     this.game.physics.arcade.gravity.y = 500;
     game.physics.enable( [ this.mushroom, this.platform1, this.platform2 ], Phaser.Physics.ARCADE);
+    this.mushroom.body.bounce.set(0.3);
+    this.mushroom.body.setSize(40, 40, 20, 20);
     this.platform1.body.allowGravity = false;
     this.platform1.body.immovable = true;
     this.platform2.body.allowGravity = false;
