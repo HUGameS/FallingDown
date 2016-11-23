@@ -24,9 +24,7 @@ export default class extends Phaser.State {
     //this.load.audio('gameMusic', ['assets/audio/Pamgaea.mp3', 'assets/audio/Pamgaea.ogg']);
     this.load.audio('gameMusic', ['assets/audio/Pamgaea.mp3', 'assets/audio/Pamgaea.ogg']);
     this.load.audio('gameOverSound', ['assets/audio/gameover.mp3', 'assets/audio/gameover.ogg']);
-    //this.load.onComplete.add(this.onLoadComplete, this)
   }
-
   render () {
     if (this.fontsReady) {
       this.state.start('Splash')

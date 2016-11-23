@@ -23,6 +23,7 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
+    "firebase": "^3.6.1",
     "phaser": "^2.6.2"
   }
 }
